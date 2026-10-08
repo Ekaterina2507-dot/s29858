@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at_utc": "2026-10-08T16:17:35.152676+00:00",
-  "status": "error",
+  "generated_at_utc": "2026-10-08T16:43:56.615770+00:00",
+  "status": "ok",
   "path": "codespaces",
   "python": {
     "version": "3.11.17",
@@ -70,7 +70,7 @@
   "git": {
     "user_name_configured": true,
     "user_email_configured": true,
-    "pre_commit_hook_installed": false
+    "pre_commit_hook_installed": true
   },
   "jupyter": {
     "asi_ml_kernel_registered": true
@@ -84,9 +84,7 @@
       "running": false
     }
   },
-  "failures": [
-    "Hook pre-commit nie jest zainstalowany. Uruchom: pre-commit install"
-  ],
+  "failures": [],
   "warnings": [
     "Docker nie jest zainstalowany. Nie blokuje to pierwszych zajęć."
   ]

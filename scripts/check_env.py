@@ -37,7 +37,9 @@ TOOL_DISTRIBUTIONS = [
 ]
 
 
-def run_command(command: list[str], timeout: int = 10) -> subprocess.CompletedProcess[str] | None:
+def run_command(
+    command: list[str], timeout: int = 10
+) -> subprocess.CompletedProcess[str] | None:
     """Uruchamia komendę bez rzucania wyjątku na zwykły błąd programu."""
     try:
         return subprocess.run(
@@ -76,7 +78,10 @@ def import_check(module: str, timeout: int = 20) -> tuple[bool, str | None]:
     """Sprawdza import w osobnym procesie, żeby pojedynczy pakiet nie zawiesił całego skryptu."""
     result = run_command([sys.executable, "-c", f"import {module}"], timeout=timeout)
     if result is None:
-        return False, "import przekroczył limit czasu albo nie udało się uruchomić Pythona"
+        return (
+            False,
+            "import przekroczył limit czasu albo nie udało się uruchomić Pythona",
+        )
     if result.returncode != 0:
         message = (result.stderr or result.stdout).strip().splitlines()
         return False, message[-1] if message else "import zakończył się błędem"
@@ -179,7 +184,9 @@ def main() -> int:
             f"Python ma wersję {platform.python_version()}, a oczekiwana jest linia 3.11.x."
         )
 
-    active_env = os.environ.get("CONDA_DEFAULT_ENV") or os.environ.get("MAMBA_DEFAULT_ENV")
+    active_env = os.environ.get("CONDA_DEFAULT_ENV") or os.environ.get(
+        "MAMBA_DEFAULT_ENV"
+    )
     env_ok = active_env == args.expected_env
     if not env_ok:
         failures.append(
@@ -201,7 +208,9 @@ def main() -> int:
         }
 
         if not imported:
-            failures.append(f"Nie działa import pakietu {distribution}: {import_error}.")
+            failures.append(
+                f"Nie działa import pakietu {distribution}: {import_error}."
+            )
         if installed_version is None:
             failures.append(f"Pakiet {distribution} nie jest zainstalowany.")
         elif not version_ok:
@@ -251,9 +260,13 @@ def main() -> int:
 
     docker = docker_info()
     if not docker["installed"]:
-        warnings.append("Docker nie jest zainstalowany. Nie blokuje to pierwszych zajęć.")
+        warnings.append(
+            "Docker nie jest zainstalowany. Nie blokuje to pierwszych zajęć."
+        )
     elif not docker["running"]:
-        warnings.append("Docker jest zainstalowany, ale daemon nie działa. Nie blokuje to pierwszych zajęć.")
+        warnings.append(
+            "Docker jest zainstalowany, ale daemon nie działa. Nie blokuje to pierwszych zajęć."
+        )
 
     report = {
         "schema_version": 1,
@@ -302,8 +315,12 @@ def main() -> int:
 
     if not args.ci:
         print(f"Git user.name:  {'OK' if git_info['user_name_configured'] else 'BŁĄD'}")
-        print(f"Git user.email: {'OK' if git_info['user_email_configured'] else 'BŁĄD'}")
-        print(f"pre-commit:     {'OK' if git_info['pre_commit_hook_installed'] else 'BŁĄD'}")
+        print(
+            f"Git user.email: {'OK' if git_info['user_email_configured'] else 'BŁĄD'}"
+        )
+        print(
+            f"pre-commit:     {'OK' if git_info['pre_commit_hook_installed'] else 'BŁĄD'}"
+        )
         print(f"kernel asi-ml:  {'OK' if kernel_ok else 'BŁĄD'}")
 
     if warnings:

@@ -35,8 +35,12 @@ def test_environment_report_exists_and_is_ok() -> None:
         "env_report.json nie ma statusu 'ok'. Uruchom ponownie check_env.py "
         "i popraw zgłoszone problemy."
     )
-    assert report.get("python", {}).get("ok") is True, "Raport nie potwierdza Pythona 3.11.x."
-    assert report.get("environment", {}).get("ok") is True, "Raport nie potwierdza środowiska asi-ml."
+    assert report.get("python", {}).get("ok") is True, (
+        "Raport nie potwierdza Pythona 3.11.x."
+    )
+    assert report.get("environment", {}).get("ok") is True, (
+        "Raport nie potwierdza środowiska asi-ml."
+    )
 
 
 def test_all_required_markdown_answers_are_filled() -> None:
@@ -69,9 +73,8 @@ def test_required_code_todos_contain_code() -> None:
         if required_todo and not optional_todo and not executable_lines(source):
             empty_todos.append(index)
 
-    assert not empty_todos, (
-        "Wymagane komórki TODO nie zawierają kodu: "
-        + ", ".join(map(str, empty_todos))
+    assert not empty_todos, "Wymagane komórki TODO nie zawierają kodu: " + ", ".join(
+        map(str, empty_todos)
     )
 
 
